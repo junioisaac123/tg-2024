@@ -105,7 +105,7 @@
     <main class="mb-auto grow">
 
         <section class="container mx-auto">
-            <div class="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 mx-auto">
+            <div class="max-w-screen-xl  px-4 py-8 sm:px-6 sm:py-12 lg:px-32 2xl:px-8 lg:py-16 mx-auto">
                 <div class="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-16">
                     <div class="mx-auto max-w-lg text-center lg:mx-0 ltr:lg:text-left rtl:lg:text-right">
                         <picture class="flex justify-center mb-4">
@@ -113,7 +113,7 @@
                         </picture>
                         <h2 class="text-3xl font-bold sm:text-4xl">Cheesematic</h2>
 
-                        <p class="mt-4 text-gray-600">
+                        <p class="mt-4 text-gray-600 text-base md:text-lg">
                             ¡Haz que las matemáticas sean tan sabrosas como el queso fundido! En Cheesematic, los
                             alumnos de
                             segundo grado exploran un mundo de diversión y aprendizaje mientras mejoran sus habilidades
@@ -121,11 +121,11 @@
                         </p>
 
                         <a href="#"
-                            class="mt-8 inline-block rounded-md bg-firefly-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-firefly>-700 focus:outline-none focus:ring focus:ring-pearl-bush-400">
+                            class="mt-8 inline-block rounded-md bg-firefly-600 px-12 py-3 text-xl font-semibold text-white transition hover:bg-firefly-700 focus:outline-none focus:ring focus:ring-pearl-bush-400">
                             {{ __('Get started') }}
                         </a>
                     </div>
-
+                    {{-- 
                     <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
                         <a class="block rounded-xl border border-gray-100 p-4 shadow-sm hover:border-gray-200 hover:ring-1 hover:ring-gray-200 focus:outline-none focus:ring"
                             href="#">
@@ -258,10 +258,18 @@
                                 Lorem ipsum dolor sit amet consectetur.
                             </p>
                         </a>
-                    </div>
+                    </div> --}}
 
                     {{-- Carousel --}}
-                    
+                    <div>
+                        <x-image-carousel :images="[
+                            [
+                                'url' => asset('images/banner/min/1.jpg'),
+                                'alt' => 'Slide 1',
+                            ],
+                        ]" />
+                    </div>
+
                 </div>
             </div>
         </section>
