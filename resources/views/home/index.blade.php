@@ -266,6 +266,38 @@
                             [
                                 'url' => asset('images/banner/min/1.jpg'),
                                 'alt' => 'Slide 1',
+                                'message' =>
+                                    'El ajedrez enseña a pensar estratégicamente, fortaleciendo habilidades matemáticas y lógicas',
+                            ],
+                            [
+                                'url' => asset('images/banner/min/2.jpg'),
+                                'alt' => 'Slide 2',
+                                'message' =>
+                                    'Jugar ajedrez fomenta la concentración y la atención en los niños, habilidades fundamentales para el éxito en las matemáticas y otras disciplinas académicas',
+                            ],
+                            [
+                                'url' => asset('images/banner/min/3.jpg'),
+                                'alt' => 'Slide 3',
+                                'message' =>
+                                    'El ajedrez enseña a los niños a reconocer patrones y relaciones entre las piezas, lo que refuerza su comprensión de conceptos matemáticos como la geometría y la aritmética.',
+                            ],
+                            [
+                                'url' => asset('images/banner/min/4.jpg'),
+                                'alt' => 'Slide 4',
+                                'message' =>
+                                    'A través del ajedrez, los niños practican el pensamiento crítico al analizar situaciones complejas y encontrar soluciones eficaces, lo que mejora su habilidad para abordar problemas matemáticos con confianza.',
+                            ],
+                            [
+                                'url' => asset('images/banner/min/4.jpg'),
+                                'alt' => 'Slide 5',
+                                'message' =>
+                                    'A través del ajedrez, los niños practican el pensamiento crítico al analizar situaciones complejas y encontrar soluciones eficaces, lo que mejora su habilidad para abordar problemas matemáticos con confianza.',
+                            ],
+                            [
+                                'url' => asset('images/banner/min/6.jpg'),
+                                'alt' => 'Slide 6',
+                                'message' =>
+                                    'La capacidad de planificar y ejecutar estrategias en el ajedrez desarrolla la capacidad de los niños para aplicar métodos sistemáticos en la resolución de problemas matemáticos.',
                             ],
                         ]" />
                     </div>
