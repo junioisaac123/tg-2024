@@ -2,6 +2,8 @@
 
 -   [x] Fix the click outside of the navbar
 -   [x] Fix the aside opened in responsive (when it is active and increase the screen size, this continue see)
+-   [x] Carrousel auto update
+-   [ ] Fix User updates
 -   [ ] CRUD CURSOS
 -   [ ] CRUD USER
 -   [ ] CRUD De Formulario
