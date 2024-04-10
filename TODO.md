@@ -4,7 +4,9 @@
 -   [x] Fix the aside opened in responsive (when it is active and increase the screen size, this continue see)
 -   [x] Carrousel auto update
 -   [x] Bugfix username
--   [ ] Fix User updates
+-   [x] Fix User updates
+-   [ ] Test register
+-   [ ] Add register ways
 -   [ ] CRUD CURSOS
 -   [ ] CRUD USER
 -   [ ] CRUD De Formulario
