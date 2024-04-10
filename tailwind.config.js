@@ -15,6 +15,22 @@ export default {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
             colors: {
+                //
+                "mine-shaft": {
+                    50: "#f7f7f6",
+                    100: "#e4e4e3",
+                    200: "#c9c8c6",
+                    300: "#a6a6a2",
+                    400: "#83837e",
+                    500: "#696863",
+                    600: "#53524e",
+                    700: "#444441",
+                    800: "#393936",
+                    900: "#313130",
+                    950: "#242422",
+                },
+
+                //
                 firefly: {
                     50: "#eefdfc",
                     100: "#d5f8f7",
