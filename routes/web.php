@@ -15,6 +15,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/users', function () {
+            return "users";
+        })->name('admin.users.index');
+        Route::get('/roles', function () {
+            return "roles";
+        })->name('admin.roles.index');
+        Route::get('/permissions', function () {
+            return "permissions";
+        })->name('admin.permissions.index');
+    });
 });
 
 require __DIR__ . '/auth.php';
