@@ -25,9 +25,21 @@
 
     @include('layouts.aside')
 
-    <div class="p-4 sm:ml-64">
-        <main class="p-4  mt-14">
-            {{ $slot }}
+    <div class="sm:ml-64">
+
+        <main class="mt-16">
+            <!-- Page Heading -->
+            @if (isset($header))
+                <header class="bg-white dark:bg-gray-800 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endif
+            <div class="p-4 ">
+                {{ $slot }}
+
+            </div>
         </main>
 
     </div>
