@@ -62,6 +62,12 @@ class AdminUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // return  response()->json([
+        //     'message' => 'destroyed',
+        // ], 200);
+        return  response()->json([
+            'error' => 'Method Not Allowed --',
+            'message' => 'Not Allowed',
+        ], 405);
     }
 }
