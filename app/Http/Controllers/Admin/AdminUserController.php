@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 
 class AdminUserController extends Controller
 {
@@ -46,7 +48,14 @@ class AdminUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $userToEdit = User::find($id);
+        if (!$userToEdit) {
+            return  back()->with('error', __('User not found'));
+        }
+        return view('profile.edit', [
+            'user' => $userToEdit,
+            'updateRoute' => 'admin.users.update',
+        ]);
     }
 
     /**
@@ -54,7 +63,27 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $userToUpdate = User::find($id);
+        if (!$userToUpdate) {
+            return  back()->with('error', __('User not found'));
+        }
+
+        $userToUpdate->fill($request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', Rule::unique(User::class)->ignore($userToUpdate->id)],
+            'phone' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($userToUpdate->id)],
+        ]));
+
+        if ($userToUpdate->isDirty('email')) {
+            $userToUpdate->email_verified_at = null;
+        }
+
+        $userToUpdate->save();
+
+        return Redirect::route('admin.users.edit', $id)->with('status', 'profile-updated');
     }
 
     /**
