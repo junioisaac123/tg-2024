@@ -102,7 +102,7 @@
         </div>
     </header>
 
-    <main class="mb-auto grow">
+    <main class="flex flex-col justify-center grow ">
 
         <section class="container mx-auto">
             <div class="max-w-screen-xl  px-4 py-8 sm:px-6 sm:py-12 lg:px-32 2xl:px-8 lg:py-16 mx-auto">
