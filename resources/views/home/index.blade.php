@@ -120,7 +120,7 @@
                             matemáticas.
                         </p>
 
-                        <a href="#"
+                        <a href="{{ route('dashboard') }}"
                             class="mt-8 inline-block rounded-md bg-firefly-600 px-12 py-3 text-xl font-semibold text-white transition hover:bg-firefly-700 focus:outline-none focus:ring focus:ring-pearl-bush-400">
                             {{ __('Get started') }}
                         </a>
