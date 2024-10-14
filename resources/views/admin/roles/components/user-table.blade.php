@@ -1,4 +1,4 @@
-<div class="relative  shadow-md sm:rounded-lg" x-data="manageUser">
+<div class="relative  shadow-md sm:rounded-lg" x-data="manageRoles">
     <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <div class="relative" x-data="{ open: false }">
@@ -53,16 +53,7 @@
                         </div>
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        {{ __('user') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('user name') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('document number') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        {{ __('document type') }}
+                        {{ __('Roles') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ __('Action') }}
@@ -70,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($roles as $role)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="col" class="p-4">
@@ -83,27 +74,17 @@
                         <th scope="row"
                             class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                             <div class="ps-3">
-                                <div class="text-base font-semibold">{{ $user->first_name }} {{ $user->last_name }}
+                                <div class="text-base font-semibold">{{ __($role->name) }}
                                 </div>
-                                <div class="font-normal text-gray-500">{{ $user->email }}</div>
                             </div>
                         </th>
                         <td class="px-6 py-4">
-                            {{ $user->username }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->document_type }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $user->document_number }}
-                        </td>
-                        <td class="px-6 py-4">
                             <a href="#"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline block">Edit user</a>
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline block">Edit role</a>
                             <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline block"
-                                @click="deleteUser" data-id="{{ $user->id }}"
-                                data-token="{{ md5($user->id . env('APP_NAME')) }}"
-                                data-action-url="{{ route('admin.users.destroy', $user->id) }}">Delete user</a>
+                                @click="deleteRole" data-id="{{ $role->id }}"
+                                data-token="{{ md5($role->id . env('APP_NAME')) }}"
+                                data-action-url="{{ route('admin.roles.destroy', $role->id) }}">Delete role</a>
                         </td>
                     </tr>
                 @endforeach

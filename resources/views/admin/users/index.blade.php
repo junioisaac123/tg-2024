@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('head.scrpits')
-    @vite([ 'resources/js/admin/users/index.js'])
+        @vite(['resources/js/admin/users/index.js'])
     @endsection
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

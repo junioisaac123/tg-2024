@@ -1,5 +1,9 @@
 import { MD5 } from "crypto-js";
+console.log("admin/users/index.js");
 document.addEventListener("alpine:init", () => {
+
+    console.log("alpine init");
+
     Alpine.data("manageUser", () => ({
         deleteUser(ev) {
             const target = ev.target;

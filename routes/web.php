@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,9 +30,16 @@ Route::middleware('auth')->group(function () {
             'destroy' => 'admin.users.destroy',
         ]);
 
-        Route::get('/roles', function () {
-            return "roles";
-        })->name('admin.roles.index');
+        Route::resource('roles', AdminRoleController::class)->names([
+            'index' => 'admin.roles.index',
+            'create' => 'admin.roles.create',
+            'store' => 'admin.roles.store',
+            'show' => 'admin.roles.show',
+            'edit' => 'admin.roles.edit',
+            'update' => 'admin.roles.update',
+            'destroy' => 'admin.roles.destroy',
+        ]);
+
         Route::get('/permissions', function () {
             return "permissions";
         })->name('admin.permissions.index');

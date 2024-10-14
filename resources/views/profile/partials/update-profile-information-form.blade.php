@@ -16,15 +16,17 @@
     <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
-        @foreach ([['name' => 'first_name', 'label' => 'First name'], ['name' => 'last_name', 'label' => 'Last name'], ['name' => 'phone', 'label' => 'Phone', 'type' => 'tel'], ['name' => 'username', 'label' => 'Username']] as $itemField)
-            <div>
-                <x-input-label for="{{ $itemField['name'] }}" :value="__($itemField['label'])" />
-                <x-text-input id="{{ $itemField['name'] }}" name="{{ $itemField['name'] }}"
-                    type="{{ $itemField['type'] ?? 'text' }}" class="mt-1 block w-full" :value="old($itemField['name'], $user[$itemField['name']])" required
-                    :autofocus="$loop->first" autocomplete="{{ $itemField['name'] }}" />
-                <x-input-error class="mt-2" :messages="$errors->get($itemField['name'])" />
-            </div>
-        @endforeach
+        <section class="grid lg:grid-cols-2 gap-6">
+            @foreach ([['name' => 'first_name', 'label' => 'First name'], ['name' => 'last_name', 'label' => 'Last name'], ['name' => 'phone', 'label' => 'Phone', 'type' => 'tel'], ['name' => 'username', 'label' => 'Username']] as $itemField)
+                <div>
+                    <x-input-label for="{{ $itemField['name'] }}" :value="__($itemField['label'])" />
+                    <x-text-input id="{{ $itemField['name'] }}" name="{{ $itemField['name'] }}"
+                        type="{{ $itemField['type'] ?? 'text' }}" class="mt-1 block w-full" :value="old($itemField['name'], $user[$itemField['name']])" required
+                        :autofocus="$loop->first" autocomplete="{{ $itemField['name'] }}" />
+                    <x-input-error class="mt-2" :messages="$errors->get($itemField['name'])" />
+                </div>
+            @endforeach
+        </section>
 
 
         <div>
