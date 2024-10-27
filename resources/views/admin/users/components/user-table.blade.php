@@ -1,3 +1,41 @@
+<style>
+    @media screen and (max-width: 720px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            border: none;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            position: absolute;
+            left: 6px;
+            content: attr(data-label);
+            font-weight: bold;
+        }
+    }
+</style>
+
 <div class="relative  shadow-md sm:rounded-lg" x-data="manageUser">
     <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
@@ -59,10 +97,10 @@
                         {{ __('user name') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        {{ __('document number') }}
+                        {{ __('document type') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        {{ __('document type') }}
+                        {{ __('document number') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ __('Action') }}

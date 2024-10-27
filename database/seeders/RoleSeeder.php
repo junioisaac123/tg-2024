@@ -14,11 +14,11 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roleRoot = Role::updatedOrcreate(['name' => 'Root']);
-        $roleTeacher = Role::updatedOrcreate(['name' => 'Teacher']);
-        $roleStudent = Role::updatedOrcreate(['name' => 'Student']);
+        $roleRoot = Role::create(['name' => 'Root']);
+        $roleTeacher = Role::create(['name' => 'Teacher']);
+        $roleStudent = Role::create(['name' => 'Student']);
 
-        $permission = Permission::updatedOrcreate(['name' => 'admin.users.*'])->syncRoles([$roleRoot, $roleTeacher]);
+        $permission = Permission::create(['name' => 'admin.users.*'])->syncRoles([$roleRoot, $roleTeacher]);
 
     }
 }
