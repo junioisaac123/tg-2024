@@ -11,6 +11,19 @@ function gtFilesFromDir(dir, fileType) {
         .map((file) => path.join(dir, file));
 }
 
+function getFilesFromDirRecursive(dir) {
+    const files = fs.readdirSync(dir, { withFileTypes: true });
+    const result = [];
+    for (const file of files) {
+        if (file.isDirectory()) {
+            result.push(...getFilesFromDirRecursive(path.join(dir, file.name)));
+        } else {
+            result.push(path.join(dir, file.name));
+        }
+    }
+    return result;
+}
+
 export default defineConfig({
     plugins: [
         laravel({
@@ -18,7 +31,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 // 'resources/js/app.js',
                 // Import all js files from Admin
-                ...gtFilesFromDir('resources/js', '.js'),
+                ...getFilesFromDirRecursive('resources/js', '.js'),
             ],
             refresh: true,
         }),
