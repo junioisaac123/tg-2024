@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\ProfileController;
@@ -40,9 +41,15 @@ Route::middleware('auth')->group(function () {
             'destroy' => 'admin.roles.destroy',
         ]);
 
-        Route::get('/permissions', function () {
-            return "permissions";
-        })->name('admin.permissions.index');
+        Route::resource('permissions', AdminPermissionController::class)->names([
+            'index' => 'admin.permissions.index',
+            'create' => 'admin.permissions.create',
+            'store' => 'admin.permissions.store',
+            'show' => 'admin.permissions.show',
+            'edit' => 'admin.permissions.edit',
+            'update' => 'admin.permissions.update',
+            'destroy' => 'admin.permissions.destroy',
+        ]);
     });
 });
 

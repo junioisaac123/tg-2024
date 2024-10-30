@@ -275,6 +275,15 @@
     "Root": "Administrador",
     "Teacher": "Profesor",
     "Student": "Estudiante",
+    "Add role": "Agregar rol",
+    "All Permisionss": "Todos los permisos",
+    "Add permission": "Agregar permiso",
+    "Delete permissions": "Borrar permisos",
+    "Search for permissions": "Buscar permisos",
+    "Permissions": "Permisos",
+    "Update at": "Actualizar en",
+    "Delete role": "Eliminar roles",
+    "Search for roles": "Buscar roles",
     "Don't have an account yet?": "¿No tiene una cuenta todavía?"
 
 }

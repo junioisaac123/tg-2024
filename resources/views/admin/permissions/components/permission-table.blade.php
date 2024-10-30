@@ -1,4 +1,42 @@
-<div class="relative  shadow-md sm:rounded-lg" x-data="manageRoles">
+<style>
+    @media screen and (max-width: 720px) {
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+
+        td {
+            border: none;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            position: absolute;
+            left: 6px;
+            content: attr(data-label);
+            font-weight: bold;
+        }
+    }
+</style>
+
+<div class="relative shadow-md sm:rounded-lg" x-data="managePermission">
     <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <div class="relative" x-data="{ open: false }">
@@ -18,11 +56,13 @@
                 class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block absolute inset-0 top-full h-max mt-3 "
                 x-show="open" x-cloak @click.away="open = false">
                 <div class="py-1">
-                    <a href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Add role') }}
+                    <a href="#" @click="showCreateModal"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                        {{ __('Add Permission') }}
                     </a>
                     <a href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">{{ __('Delete roles') }}
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                        {{ __('Delete Permissions') }}
                     </a>
                 </div>
             </div>
@@ -36,9 +76,9 @@
                         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
             </div>
-            <input type="text" id="table-search-roles"
+            <input type="text" id="table-search-permissions"
                 class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="{{ __('Search for roles') }}">
+                placeholder="{{ __('Search for permissions') }}">
         </div>
     </div>
     <section class="overflow-x-auto w-full">
@@ -52,8 +92,15 @@
                             <label for="checkbox-all-search" class="sr-only">checkbox</label>
                         </div>
                     </th>
+
                     <th scope="col" class="px-6 py-3">
-                        {{ __('Roles') }}
+                        {{ __('Name') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {{ __('Guard name') }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        {{ __('Updated at') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
                         {{ __('Action') }}
@@ -61,7 +108,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($roles as $role)
+                @foreach ($permissions as $permission)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="col" class="p-4">
@@ -71,20 +118,27 @@
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
-                        <th scope="row"
-                            class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">{{ __($role->name) }}
-                                </div>
-                            </div>
-                        </th>
                         <td class="px-6 py-4">
-                            <a href="#"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline block">Edit role</a>
+                            {{ $permission->name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $permission->guard_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $permission->updated_at }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="#" @click.prevent="showEditModal"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline block"
+                                data-permission-id="{{ $permission->id }}"
+                                data-permission-name="{{ $permission->name }}"
+                                data-permission-guard-name="{{ $permission->guard_name }}">
+                                {{ __('Edit permission') }}
+                            </a>
                             <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline block"
-                                @click="deleteRole" data-id="{{ $role->id }}"
-                                data-token="{{ md5($role->id . env('APP_NAME')) }}"
-                                data-action-url="{{ route('admin.roles.destroy', $role->id) }}">Delete role</a>
+                                @click.prevent="deletePermission" data-id="{{ $permission->id }}"
+                                data-token="{{ md5($permission->id . env('APP_NAME')) }}"
+                                data-action-url="{{ route('admin.permissions.destroy', $permission->id) }}">{{ __('Delete permission') }}</a>
                         </td>
                     </tr>
                 @endforeach
@@ -93,4 +147,5 @@
         </table>
     </section>
 
+    @include('admin.permissions.components.create-permission-modal')
 </div>
