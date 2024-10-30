@@ -119,7 +119,9 @@
                             </div>
                         </th>
                         <td class="px-6 py-4">
-                            {{ $permission->name }}
+                            <span class="text-base font-semibold text-gray-900 dark:text-white ">
+                                {{ $permission->name }}
+                            </span>
                         </td>
                         <td class="px-6 py-4">
                             {{ $permission->guard_name }}

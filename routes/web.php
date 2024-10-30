@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\ChessController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,9 @@ Route::middleware('auth')->group(function () {
             'destroy' => 'admin.permissions.destroy',
         ]);
     });
+
+    // Chesse
+    Route::get('/cheese/start', [ChessController::class, 'startGame'])->name('cheese.start');
 });
 
 require __DIR__ . '/auth.php';
