@@ -10,8 +10,6 @@ const $ = (el) => document.querySelector(el);
 const $$ = (el) => document.querySelectorAll(el);
 const showEl = (el) => el.classList.remove("hidden");
 const hideEl = (el) => el.classList.add("hidden");
-const disableEl = (el) => el.setAttribute("disabled", "disabled");
-const enableEl = (el) => el.removeAttribute("disabled");
 
 // Elements --------------------------------------------------
 const $boardEl = $(BOARD_DOM_ID);
@@ -39,9 +37,6 @@ const $btnContinueGame = $modalGame.querySelector(
 const $btnResetNewGame = $modalGame.querySelector(
     "[data-btn-action='reset-new-game']",
 );
-
-const $waitSpin = $("#wait-spin");
-const $btnPause = $("#btn-pause");
 
 const gameState = {
     _board: null,
@@ -80,6 +75,7 @@ const gameState = {
         return this._engine;
     },
     game_over() {
+        console.log(this._engine);
         return this._engine ? this._engine.isGameOver() : null;
     },
     turn() {
@@ -89,10 +85,11 @@ const gameState = {
     updatePosition() {
         this._board.position(this._engine.fen(), true);
     },
-    elo() {
-        return 1200;
-    },
 };
+
+let boardGame = null;
+let turn = null;
+let userColor = null;
 
 // Functions --------------------------------------------------
 function hiddenModal() {
@@ -186,7 +183,9 @@ function setState() {
         STORAGE_KEY,
         JSON.stringify({
             orientation: gameState.orientation,
+            turn: gameState.turn(),
             fen: gameState.fen,
+            // position: gameState.position
         }),
     );
 }
@@ -197,27 +196,19 @@ function onDragStart(source, piece, position, orientation) {
     // do not pick up pieces if the game is over
     if (gameState.game_over()) return false;
     // only pick up pieces for the side to move
-    // and the player pieces
-    const aiCilor = gameState.orientation === "white" ? "b" : "w";
     if (
-        piece.search(new RegExp(`^${aiCilor}`)) !== -1 ||
-        gameState.turn() === aiCilor
+        (gameState.turn() === "w" && piece.search(/^b/) !== -1) ||
+        (gameState.turn() === "b" && piece.search(/^w/) !== -1)
     ) {
         return false;
     }
-
-    // if ((gameState.turn() === 'w' && piece.search(/^b/) !== -1) ||
-    //     (gameState.turn() === 'b' && piece.search(/^w/) !== -1)) {
-    //     return false
-    // }
 }
 
 function onDrop(source, target) {
     removeGreySquares();
 
     // see if the move is legal
-
-    let move;
+    let move
     try {
         move = gameState.engine.move({
             from: source,
@@ -251,15 +242,9 @@ function onDrop(source, target) {
         // gameState.updatePosition();
         updateStatus();
     }
-    setTimeout(makeAiMove, 250);
 }
 
 function onMouseoverSquare(square, piece) {
-    // skip if i want to resalt the AI moves
-    const aiCilor = gameState.orientation === "white" ? "b" : "w";
-    if (!piece || piece.search(new RegExp(`^${aiCilor}`)) !== -1) {
-        return;
-    }
     // get list of possible moves for this square
     const moves = gameState.engine.moves({
         square: square,
@@ -289,67 +274,26 @@ function onSnapEnd() {
 
 function updateStatus() {
     const stateColor = gameState.engine.turn() === "w" ? "White" : "Black";
+    console.log(gameState.engine);
     if (gameState.engine.isCheckmate()) {
         const nextColor =
             gameState.engine.turn() === "w" ? "Negras" : "Blancas";
         showGameOverBanner(`¡Jaque mate! Las ${nextColor} ganan.🎉🥳`);
     } else if (gameState.engine.isDraw()) {
         showGameOverBanner("El juego ha terminado en tablas.");
+    } else {
+        console.log(`${stateColor} is to Move`);
+        if (gameState.engine.inCheck()) {
+            console.log(`${stateColor} is in check!`);
+        }
     }
-    // else {
-    //     console.log(`${stateColor} is to Move`)
-    //     if (gameState.engine.in_check()) {
-    //         console.log(`${stateColor} is in check!`)
-    //     }
-    // }
-    // if (gameState.game_over()) {
-    //     console.log('Game over')
-    // }
+    if (gameState.game_over()) {
+        console.log("Game over");
+    }
 
     setState();
 }
 
-function makeAiMove() {
-    if (gameState.game_over()) {
-        return;
-    }
-
-    showEl($waitSpin);
-    disableEl($btnPause);
-    // fetch fen and elo to serve localhost:5000
-    fetch("http://localhost:5000/aimove", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fen: gameState.fen,
-            elo: gameState.elo(),
-        }),
-    })
-        .then((res) => {
-            if (res.status !== 200) {
-                throw new Error("Server error");
-            }
-            return res.json();
-        })
-        .then((data) => {
-            gameState.engine.move({
-                from: data.from,
-                to: data.to,
-                promotion: data.promotion,
-            });
-            gameState.updatePosition();
-            updateStatus();
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-        .finally(() => {
-            hideEl($waitSpin);
-            enableEl($btnPause);
-        });
-}
 // Board --------------------------------------------------
 
 function makeBoard(opts, fen) {
@@ -357,7 +301,8 @@ function makeBoard(opts, fen) {
         {
             ...opts,
             pieceTheme: $boardEl.getAttribute("data-piece-theme"),
-            moveSpeed: 300,
+            // "resources/js/libs/chessboardjs/img/chesscom/{piece}.png",
+            //
         },
         fen,
     );
@@ -379,7 +324,7 @@ function makeExtendBoard(opts, fen) {
 }
 // Action functions--------------------------------------------------
 
-function instanceBoard(color, fen) {
+function instanceBoard(color, turn = "white", fen) {
     makeExtendBoard(
         {
             position: fen ?? "start",
@@ -406,19 +351,17 @@ function startNewGame() {
     instanceBoard(color);
     setState();
     hiddenModal();
-    if (color !== "white") {
-        makeAiMove();
-    }
 }
 
 function continueGame() {
     const currentState = getState();
-    instanceBoard(currentState.orientation, currentState.fen);
+    instanceBoard(
+        currentState.orientation,
+        currentState.turn,
+        currentState.fen,
+    );
     hiddenModal();
     updateStatus();
-    if (gameState.orientation !== "white" && gameState.turn() == "w") {
-        makeAiMove();
-    }
 }
 
 // Events --------------------------------------------------
@@ -438,10 +381,6 @@ $btnContinueGame.addEventListener("click", continueGame);
 $btnRestartGame.addEventListener("click", function () {
     hideGameOverBanner();
     showNewGameModal();
-});
-
-$btnPause.addEventListener("click", function () {
-    showResumeGameModal();
 });
 
 // Proccess --------------------------------------------------
