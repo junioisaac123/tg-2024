@@ -1,0 +1,22 @@
+.chess_caculated_layout {
+    /*nav space*/
+    --top-space: 6rem;
+    /* space around */
+    --around-padding: 8px;
+    /*player space*/
+    --player-space: 56px;
+    --bh: calc(100dvh - var(--top-space, 0) - (2* var(--player-space, 0)) - (2* var(--around-padding, 0)));
+
+    padding: var(--around-padding, 0) 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    height: calc(100dvh - var(--top-space, 0));
+    max-width: var(--bh);
+}
+
+.chess_board_space {
+    padding: 2px;
+    max-height: var(--bh);
+    max-width: var(--bh);
+}

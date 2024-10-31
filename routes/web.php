@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Chesse
-    Route::get('/cheese/start', [ChessController::class, 'startGame'])->name('cheese.start');
+    Route::get('/chess/start', [ChessController::class, 'startGame'])->name('chess.start');
 });
 
 require __DIR__ . '/auth.php';

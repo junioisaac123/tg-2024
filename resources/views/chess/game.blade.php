@@ -1,57 +1,48 @@
 <x-app-layout>
     @section('head.scrpits')
-        <!-- ## JS ## -->
-        {{-- <script defer src="modules/alpinejs.min.js"></script> --}}
-        {{-- <script src="modules/jquery-3.5.1.min.js"></script>
-        <script src="modules/chess.min.js"></script>
-        <script src="modules/chessboardjs/chessboard-1.0.0.min.js"></script>
+        {{-- <!-- ## JS ## -->
+            <script defer src="modules/alpinejs.min.js"></script>
+            <script src="modules/jquery-3.5.1.min.js"></script>
+            <script src="modules/chess.min.js"></script>
+            <script src="modules/chessboardjs/chessboard-1.0.0.min.js"></script>
 
-        <script src="assets/js/main.js" defer></script>
+            <script src="assets/js/main.js" defer></script>
 
-        <!-- ## CSS ## -->
-        <link rel="stylesheet" href="modules/chessboardjs/chessboard-1.0.0.min.css">
-        <link rel="stylesheet" href="assets/css/output.css">
-        <link rel="stylesheet" href="assets/css/main.css"> --}}
+            <!-- ## CSS ## -->
+            <link rel="stylesheet" href="modules/chessboardjs/chessboard-1.0.0.min.css">
+            <link rel="stylesheet" href="assets/css/output.css">
+            <link rel="stylesheet" href="assets/css/main.css">
+        --}}
 
-        @vite([
-            'resources/js/libs/jquery-3.5.1.min.js', 
+
+        {{-- @vite([
+            //
+            'resources/js/libs/jquery-3.5.1.min.js',
             'resources/js/libs/chess.min.js',
             'resources/js/libs/chessboardjs/chessboard-1.0.0.min.js',
-            'resources/js/chess/game.js'])
+            'resources/js/chess/game.js',
+        ])
+
+        @vite([
+            //
+            'resources/js/libs/chessboardjs/chessboard-1.0.0.min.css',
+            'resources/css/modules/game.css',
+        ]) --}}
+
+        @vite(['resources/css/modules/game.css', 'resources/js/chess/game.js'])
     @endsection
     <style>
-        .chess_caculated_layout {
-            /*nav space*/
-            --top-space: 0px;
-            /* space around */
-            --around-padding: 8px;
-            /*player space*/
-            --player-space: 56px;
-            --bh: calc(100dvh - var(--top-space, 0) - (2* var(--player-space, 0)) - (2* var(--around-padding, 0)));
 
-            padding: var(--around-padding, 0) 0;
-            display: flex;
-            flex-direction: column;
-            margin: 0 auto;
-            height: calc(100dvh - var(--top-space, 0));
-            max-width: var(--bh);
-        }
-
-        .chess_board_space {
-            padding: 2px;
-            max-height: var(--bh);
-            max-width: var(--bh);
-        }
     </style>
 
 
 
-    <main class="">
+    <section class="">
         <div class="chess_caculated_layout">
             <!-- Name Player 1 -->
             <section class="flex px-2 items-start h-14">
-                <img class="w-14 max-h-full aspect-square rounded-sm object-fill" src="assets/images/profiles/ai1.webp"
-                    alt="">
+                <img class="w-14 max-h-full aspect-square rounded-sm object-fill"
+                    src="{{ Vite::asset('resources/images/profiles/ai1.webp') }}" alt="">
                 <div class="ml-2">
                     <h1 class="text-xl font-bold text-slate-100">Bot Player</h1>
                     <p class="text-slate-300">Computer</p>
@@ -66,7 +57,7 @@
             <!-- Name Player 2 -->
             <section class="flex px-2 items-start h-14">
                 <img class="w-14 max-h-full aspect-square rounded-sm object-fill"
-                    src="assets/images/profiles/generic.webp" alt="">
+                    src="{{ Vite::asset('resources/images/profiles/generic.webp') }}" alt="">
                 <div class="ml-2">
                     <h1 class="text-xl font-bold text-slate-100">Player 2</h1>
                     <p class="text-slate-300">Student</p>
@@ -74,7 +65,7 @@
             </section>
         </div>
 
-    </main>
+    </section>
 
     <!-- MODAL -->
     <section
@@ -219,13 +210,17 @@
                     <p class="mb-4 text-gray-600 text-center">Seleccione la pieza a la que desea promocionar el peón:
                     </p>
                     <div class="flex justify-stretch">
-                        <img src="modules/chessboardjs/img/chesscom/wQ.png" data-piece="q" alt="Dama"
+                        <img src="{{ Vite::asset('resources/js/libs/chessboardjs/img/chesscom/wQ.png') }}"
+                            data-piece="q" alt="Dama"
                             class="cursor-pointer flex-1 object-contain h-12 p-1 hover:bg-slate-300/70 rounded-md hover:shadow-md" />
-                        <img src="modules/chessboardjs/img/chesscom/wR.png" data-piece="r" alt="Torre"
+                        <img src="{{ Vite::asset('resources/js/libs/chessboardjs/img/chesscom/wR.png') }}"
+                            data-piece="r" alt="Torre"
                             class="cursor-pointer flex-1 object-contain h-12 p-1 hover:bg-slate-300/70 rounded-md hover:shadow-md" />
-                        <img src="modules/chessboardjs/img/chesscom/wB.png" data-piece="b" alt="Alfil"
+                        <img src="{{ Vite::asset('resources/js/libs/chessboardjs/img/chesscom/wB.png') }}"
+                            data-piece="b" alt="Alfil"
                             class="cursor-pointer flex-1 object-contain h-12 p-1 hover:bg-slate-300/70 rounded-md hover:shadow-md" />
-                        <img src="modules/chessboardjs/img/chesscom/wN.png" data-piece="n" alt="Caballo"
+                        <img src="{{ Vite::asset('resources/js/libs/chessboardjs/img/chesscom/wN.png') }}"
+                            data-piece="n" alt="Caballo"
                             class="cursor-pointer flex-1 object-contain h-12 p-1 hover:bg-slate-300/70 rounded-md hover:shadow-md" />
                     </div>
                 </section>

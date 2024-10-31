@@ -32,6 +32,7 @@ export default defineConfig({
                 // 'resources/js/app.js',
                 // Import all js files from Admin
                 ...getFilesFromDirRecursive("resources/js", ".js"),
+                ...getFilesFromDirRecursive("resources/css", ".css"),
             ],
             refresh: true,
         }),
