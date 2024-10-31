@@ -69,8 +69,8 @@
                     @if (Route::has('login'))
                         <div class="sm:flex sm:gap-4">
                             @auth
-                                <a href="{{ url('/dashboard') }}"
-                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                <a class="block rounded-md bg-firefly-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-firefly-700"
+                                    href="{{ route('dashboard') }}">
                                     {{ __('Dashboard') }}
                                 </a>
                             @else
@@ -111,10 +111,10 @@
                         <picture class="flex justify-center mb-4">
                             <img class="h-20 md:h-36  aspect-square" src="{{ asset('logo-min.png') }}" alt="logo">
                         </picture>
-                        <h2 class="text-3xl font-bold sm:text-4xl">Cheesematic</h2>
+                        <h2 class="text-3xl font-bold sm:text-4xl">Chessmatic</h2>
 
                         <p class="mt-4 text-gray-600 text-base md:text-lg">
-                            ¡Haz que las matemáticas sean tan sabrosas como el queso fundido! En Cheesematic, los
+                            ¡Haz que las matemáticas sean tan sabrosas como el queso fundido! En Chessmatic, los
                             alumnos de
                             segundo grado exploran un mundo de diversión y aprendizaje mientras mejoran sus habilidades
                             matemáticas.
