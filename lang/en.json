@@ -13,6 +13,7 @@
     "Admin": "Admin",
     "Agree": "Agree",
     "All rights reserved.": "All rights reserved.",
+    "All Roles": "All Roles",
     "Already registered?": "Already registered?",
     "Already Reported": "Already Reported",
     "Archive": "Archive",
@@ -181,6 +182,8 @@
     "Restore :name": "Restore :name",
     "results": "results",
     "Retry With": "Retry With",
+    "Roles": "Roles",
+    "Root": "Admin",
     "Save": "Save",
     "Save & Close": "Save & Close",
     "Save & Return": "Save & Return",
@@ -205,6 +208,7 @@
     "SSL Handshake Failed": "SSL Handshake Failed",
     "Start": "Start",
     "Stop": "Stop",
+    "Student": "Student",
     "Submit": "Submit",
     "Subscribe": "Subscribe",
     "Switch": "Switch",
@@ -212,6 +216,7 @@
     "Switching Protocols": "Switching Protocols",
     "Tag": "Tag",
     "Tags": "Tags",
+    "Teacher": "Teacher",
     "Temporary Redirect": "Temporary Redirect",
     "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.": "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
     "The given data was invalid.": "The given data was invalid.",
@@ -251,11 +256,5 @@
     "Yes": "Yes",
     "You are receiving this email because we received a password reset request for your account.": "You are receiving this email because we received a password reset request for your account.",
     "You're logged in!": "You're logged in!",
-    "Your email address is unverified.": "Your email address is unverified.",
-    "All Roles": "All Roles",
-    "Roles": "Roles",
-    "Root": "Admin",
-    "Teacher": "Teacher",
-    "Student": "Student"
-
+    "Your email address is unverified.": "Your email address is unverified."
 }
