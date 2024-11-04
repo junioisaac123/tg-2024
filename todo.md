@@ -11,3 +11,4 @@ Tareas
 - proteger la ruta para que nada más el estudiante pueda ver el ajedrez 
 - proteger las de admin para que solo el admin pueda averías
 
+- cargar engine en php

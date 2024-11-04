@@ -317,16 +317,23 @@ function makeAiMove() {
     showEl($waitSpin);
     disableEl($btnPause);
     // fetch fen and elo to serve localhost:5000
-    fetch("http://localhost:5000/aimove", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
+    fetch(
+        // "http://localhost:5000/aimove"
+        "/aimove",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            body: JSON.stringify({
+                fen: gameState.fen,
+                elo: gameState.elo(),
+            }),
         },
-        body: JSON.stringify({
-            fen: gameState.fen,
-            elo: gameState.elo(),
-        }),
-    })
+    )
         .then((res) => {
             if (res.status !== 200) {
                 throw new Error("Server error");

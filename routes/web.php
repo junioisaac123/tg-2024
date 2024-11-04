@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     // Chesse
     Route::get('/chess/start', [ChessController::class, 'startGame'])->name('chess.start');
+    Route::post('/aimove', [ChessController::class, 'aimove'])->name('chess.aimove');
 });
 
 require __DIR__ . '/auth.php';
