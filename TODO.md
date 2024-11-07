@@ -8,11 +8,12 @@
 
 - Pregunta: (Descripción y comportamiento para la pregunta)
   - Título
+  - categoria (fg)
   - Descripción (optioal)
   - Imágen (optional)
   - Obligatorio:
     - boolean
-  - Type: (enum) 
+  - Type: (enum)
     - Short paragraph
       - Input
     - Long paragraph
@@ -26,7 +27,12 @@
     - Lista desplegable
       - Select
 
+Nota: crear seeder para guardar categoria de tipo (emocional y matematico)}
+
+- Categorias:
+  - text (unico)
+
 - Opción: (Opción para la pregunta)
-    - texto
-    - puntaje (optional)
-    - hash (autogenerado)
+  - texto
+  - puntaje (optional)
+  - hash (autogenerado)
