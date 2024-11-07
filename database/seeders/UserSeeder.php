@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'phone' => '1234567890',
             'document_type' => 'CC',
             'document_number' => '1234567890',
+            'elo' => 800,
             'email' => 'jisaac197@gmail.com',
             'password' => Hash::make('123456'),
             'email_verified_at' => now(),

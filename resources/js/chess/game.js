@@ -20,6 +20,7 @@ const $modalPromotion = $("#modal-promotion");
 
 const $gameOverBanner = $("#game-over-banner");
 const $gameOverMessage = $gameOverBanner.querySelector("#game-over-message");
+const $gameOverSubMessage = $gameOverBanner.querySelector("#game-over-message");
 const $btnRestartGame = $gameOverBanner.querySelector(
     '[data-btn-action="restart-game"]',
 );
@@ -42,6 +43,14 @@ const $btnResetNewGame = $modalGame.querySelector(
 
 const $waitSpin = $("#wait-spin");
 const $btnPause = $("#btn-pause");
+const gameWrapper = $('[data-game="chess"]');
+// Proccessed --------------------------------------------------
+
+const user = {};
+user.elo = gameWrapper.dataset.userElo;
+user.name = gameWrapper.dataset.userName;
+// const eloToUse =
+// GameState --------------------------------------------------
 
 const gameState = {
     _board: null,
@@ -90,7 +99,7 @@ const gameState = {
         this._board.position(this._engine.fen(), true);
     },
     elo() {
-        return 1200;
+        return user.elo;
     },
 };
 
@@ -127,8 +136,13 @@ function showPromotionDialog(color, callback) {
 
     const pieces = ["q", "r", "b", "n"];
     const pieceImages = $modalPromotion.querySelectorAll("img[data-piece]");
+    const pieceTheme = $boardEl.getAttribute("data-piece-theme");
     pieceImages.forEach(function (img, idx) {
-        img.src = `modules/chessboardjs/img/chesscom/${color}${pieces[idx].toUpperCase()}.png`;
+        // img.src = `modules/chessboardjs/img/chesscom/${color}${pieces[idx].toUpperCase()}.png`;
+        img.src = pieceTheme.replace(
+            "{piece}",
+            `${color}${pieces[idx].toUpperCase()}`,
+        );
     });
 
     function onSelectPromotionPiece(event) {
@@ -145,8 +159,9 @@ function showPromotionDialog(color, callback) {
     });
 }
 
-function showGameOverBanner(message) {
-    $gameOverMessage.textContent = message;
+function showGameOverBanner(title, subtitle) {
+    $gameOverMessage.innerHTML = title;
+    $gameOverSubMessage.innerHTML = subtitle;
     showEl($gameOverBanner);
 }
 
@@ -242,8 +257,10 @@ function onDrop(source, target) {
                 to: target,
                 promotion: promotionPiece,
             });
+            console.log(move);
             gameState.updatePosition();
             updateStatus();
+            makeAiMove();
         });
         // Retornamos 'snapback' para evitar que el movimiento se realice inmediatamente
         return "snapback";
@@ -251,7 +268,7 @@ function onDrop(source, target) {
         // gameState.updatePosition();
         updateStatus();
     }
-    setTimeout(makeAiMove, 250);
+    makeAiMove();
 }
 
 function onMouseoverSquare(square, piece) {
@@ -291,20 +308,19 @@ function updateStatus() {
     const stateColor = gameState.engine.turn() === "w" ? "White" : "Black";
     if (gameState.engine.isCheckmate()) {
         const nextColor =
-            gameState.engine.turn() === "w" ? "Negras" : "Blancas";
-        showGameOverBanner(`¡Jaque mate! Las ${nextColor} ganan.🎉🥳`);
+            gameState.engine.turn() === "w" ? "Negro ⚫" : "Blanco ⚪";
+        const title = `¡Jaque mate! <br>Las fichas de color ${nextColor} ganaron!`;
+        let subtitle = "";
+        if (gameState.orientation === nextColor) {
+            subtitle += "¡Has Ganado! 😎🎉";
+        } else {
+            subtitle +=
+                "<br>¡Has Perdido! 😭. <br>¡¡Pero no te rindas!!, vuelve a intentarlo 🔥💫";
+        }
+        showGameOverBanner(title, subtitle);
     } else if (gameState.engine.isDraw()) {
         showGameOverBanner("El juego ha terminado en tablas.");
     }
-    // else {
-    //     console.log(`${stateColor} is to Move`)
-    //     if (gameState.engine.in_check()) {
-    //         console.log(`${stateColor} is in check!`)
-    //     }
-    // }
-    // if (gameState.game_over()) {
-    //     console.log('Game over')
-    // }
 
     setState();
 }
@@ -316,24 +332,19 @@ function makeAiMove() {
 
     showEl($waitSpin);
     disableEl($btnPause);
-    // fetch fen and elo to serve localhost:5000
-    fetch(
-        // "http://localhost:5000/aimove"
-        "/aimove",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content"),
-            },
-            body: JSON.stringify({
-                fen: gameState.fen,
-                elo: gameState.elo(),
-            }),
+    fetch("/chess/aimove", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
         },
-    )
+        body: JSON.stringify({
+            fen: gameState.fen,
+            elo: gameState.elo(),
+        }),
+    })
         .then((res) => {
             if (res.status !== 200) {
                 throw new Error("Server error");

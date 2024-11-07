@@ -13,7 +13,8 @@
             'resources/js/chess/game.js',
         ])
     @endsection
-    <main class="">
+    <section data-game="chess" data-user-elo="{{ $user->elo }}"
+        data-user-name="{{ $user->first_name . ' ' . $user->last_name }}">
         <div class="chess_caculated_layout">
             <div class="flex justify-between items-center">
                 <!-- Name Player 1 -->
@@ -64,20 +65,22 @@
             </section>
         </div>
 
-    </main>
+    </section>
 
     <!-- MODAL -->
     <section
-        class="hidden flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-screen max-h-full bg-gray-900/70 backdrop-blur-sm"
+        class="hidden flex overflow-y-auto overflow-x-hidden absolute inset-0 z-50 justify-center items-center w-full h-screen max-h-full bg-gray-900/50 dark:bg-gray-900/80 backdrop-blur-sm"
         id="modal-game">
         <div class="relative p-2 md:p-4 w-full max-w-md max-h-full">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow ">
+            <div class="relative bg-white dark:bg-gray-700 rounded-lg shadow ">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-2 sm:p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-xl text-center w-full font-semibold text-gray-900 ">
-                        Chess AI ♟
+                <div
+                    class="flex items-center justify-between p-2 sm:p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl text-center w-full font-semibold text-gray-900 dark:text-white">
+                        {{ __('Chess Game Menu') }} ♟
                     </h3>
+
                     <button type="button"
                         class="flex text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 justify-center items-center "
                         data-bs-dismiss="modal">
@@ -125,7 +128,8 @@
                     <article class="" data-state="new-game" x-data="{ color: null }">
                         <section class="grid gap-4 mb-4 grid-cols-2">
                             <article class="col-span-2">
-                                <h3 for="name" class="text-center block mb-2 text-lg font-medium text-gray-900">
+                                <h3 for="name"
+                                    class="text-center block mb-2 text-lg font-medium text-gray-900 dark:text-gray-300">
                                     ¿Como deseas jugar?
                                 </h3>
                                 <ul class="grid w-full gap-6 grid-cols-3">
@@ -193,20 +197,22 @@
 
     <!-- Modal de Promoción -->
     <section
-        class="hidden flex overflow-y-auto overflow-x-hidden fixed inset-0 z-40 justify-center items-center w-full h-screen max-h-full bg-gray-900/70 backdrop-blur-sm"
+        class="hidden flex overflow-y-auto overflow-x-hidden absolute inset-0 z-40 justify-center items-center w-full h-screen max-h-full bg-gray-900/50 dark:bg-gray-900/80 backdrop-blur-sm"
         id="modal-promotion">
         <div class="relative p-2 md:p-4 w-full max-w-md max-h-full">
             <!-- Contenido del modal -->
-            <div class="relative bg-white rounded-lg shadow ">
+            <div class="relative bg-white dark:bg-gray-700 rounded-lg shadow ">
                 <!-- Encabezado del modal -->
-                <div class="flex items-center justify-between p-2 sm:p-4 md:p-5 border-b rounded-t">
-                    <h3 class="text-xl text-center w-full font-semibold text-gray-900 ">
+                <div
+                    class="flex items-center justify-between p-2 sm:p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl text-center w-full font-semibold text-gray-900 dark:text-white">
                         Promoción de Peón
                     </h3>
                 </div>
                 <!-- Cuerpo del modal -->
                 <section class="p-3 sm:p-4 md:p-5">
-                    <p class="mb-4 text-gray-600 text-center">Seleccione la pieza a la que desea promocionar el peón:
+                    <p class="mb-4 text-gray-600 text-center dark:text-gray-300">Seleccione la pieza a la que desea
+                        promocionar el peón:
                     </p>
                     <div class="flex justify-stretch">
                         <img src="{{ Vite::asset('resources/js/libs/chessboardjs/img/chesscom/wQ.png') }}"
@@ -228,14 +234,18 @@
     </section>
 
     <!-- Banner de Fin de Juego -->
-    <section class="hidden fixed inset-0 z-[51] flex items-center justify-center bg-gray-900/70 backdrop-blur-sm"
+    <section class="hidden absolute inset-0 z-[51] flex items-center justify-center bg-gray-900/70 backdrop-blur-sm"
         id="game-over-banner">
-        <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-            <h2 class="text-2xl font-bold mb-4 text-gray-900" id="game-over-message">¡Juego Terminado!</h2>
-            <button type="button" data-btn-action="restart-game"
-                class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                Iniciar Nuevo Juego
-            </button>
+        <div class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white " id="game-over-message">¡Juego
+                Terminado!</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-6" id="game-over-submessage">
+            <p>
+
+                <button type="button" data-btn-action="restart-game"
+                    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Iniciar Nuevo Juego
+                </button>
         </div>
     </section>
 

@@ -26,16 +26,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('permissions', AdminPermissionController::class);
     });
 
-    // Route::prefix('pres')->name('pres.')->group(function () {
-    //     Route::resource('tests', TestsController::class);
-    // });
-
     // Chesse
     Route::prefix('chess')->name('chess.')->group(function () {
         Route::get('/new', [ChessController::class, 'startGame'])->name('game.new');
         Route::post('/aimove', [ChessController::class, 'aiMove'])->name('game.aimove');
     });
-    // Route::post('/aimove', [ChessController::class, 'aimove'])->name('chess.aimove');
 });
 
 require __DIR__ . '/auth.php';

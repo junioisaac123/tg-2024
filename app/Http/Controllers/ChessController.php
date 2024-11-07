@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -12,8 +13,8 @@ class ChessController extends Controller
 
     public function startGame()
     {
-
-        return view('chess.game');
+        $user = Auth::user();
+        return view('chess.game', compact('user'));
     }
 
 

@@ -38,7 +38,7 @@
                     </div>
                 </header>
             @endif
-            <div class="p-4 ">
+            <div class="p-4 relative">
                 {{ $slot }}
 
             </div>
