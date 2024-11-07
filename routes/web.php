@@ -20,42 +20,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('admin')->group(function () {
-
-        Route::resource('users', AdminUserController::class)->names([
-            'index' => 'admin.users.index',
-            'create' => 'admin.users.create',
-            'store' => 'admin.users.store',
-            'show' => 'admin.users.show',
-            'edit' => 'admin.users.edit',
-            'update' => 'admin.users.update',
-            'destroy' => 'admin.users.destroy',
-        ]);
-
-        Route::resource('roles', AdminRoleController::class)->names([
-            'index' => 'admin.roles.index',
-            'create' => 'admin.roles.create',
-            'store' => 'admin.roles.store',
-            'show' => 'admin.roles.show',
-            'edit' => 'admin.roles.edit',
-            'update' => 'admin.roles.update',
-            'destroy' => 'admin.roles.destroy',
-        ]);
-
-        Route::resource('permissions', AdminPermissionController::class)->names([
-            'index' => 'admin.permissions.index',
-            'create' => 'admin.permissions.create',
-            'store' => 'admin.permissions.store',
-            'show' => 'admin.permissions.show',
-            'edit' => 'admin.permissions.edit',
-            'update' => 'admin.permissions.update',
-            'destroy' => 'admin.permissions.destroy',
-        ]);
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('users', AdminUserController::class);
+        Route::resource('roles', AdminRoleController::class);
+        Route::resource('permissions', AdminPermissionController::class);
     });
 
+    // Route::prefix('pres')->name('pres.')->group(function () {
+    //     Route::resource('tests', TestsController::class);
+    // });
+
     // Chesse
-    Route::get('/chess/start', [ChessController::class, 'startGame'])->name('chess.start');
-    Route::post('/aimove', [ChessController::class, 'aimove'])->name('chess.aimove');
+    Route::prefix('chess')->name('chess.')->group(function () {
+        Route::get('/new', [ChessController::class, 'startGame'])->name('game.new');
+        Route::post('/aimove', [ChessController::class, 'aiMove'])->name('game.aimove');
+    });
+    // Route::post('/aimove', [ChessController::class, 'aimove'])->name('chess.aimove');
 });
 
 require __DIR__ . '/auth.php';
