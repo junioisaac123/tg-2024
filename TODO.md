@@ -1,38 +1,41 @@
-# TODO's
+# TODOs
 
-- Crear + Modelo
+- [ ] Crear + Modelo
 
-- Formularios:
-  - title
-  - description
+- [x] Formularios:
+  - [ ] title
+  - [ ] description
 
-- Pregunta: (Descripción y comportamiento para la pregunta)
-  - Título
-  - categoria (fg)
-  - Descripción (optioal)
-  - Imágen (optional)
-  - Obligatorio:
-    - boolean
-  - Type: (enum)
-    - Short paragraph
-      - Input
-    - Long paragraph
-      - Text area
-    - Opción multiple, con única respuesta
-      - Raddio button
-      - Permité agregar la opción `otro...` que es un input
-    - Cacilla de verificación (Check box)
-      - Check box
-      - Permité agregar la opción `otro...` que es un input
-    - Lista desplegable
-      - Select
+- [x] Pregunta: (Descripción y comportamiento para la pregunta)
+  - [ ] Título
+  - [ ] categoria (fg)
+  - [ ] Descripción (optioal)
+  - [ ] Imágen (optional)
+  - [ ] Obligatorio:
+    - [ ] boolean
+  - [ ] Type: (enum)
+    - [ ] Short paragraph
+      - [ ] Input
+    - [ ] Long paragraph
+      - [ ] Text area
+    - [ ] Opción multiple, con única respuesta
+      - [ ] Raddio button
+      - [ ] Permité agregar la opción `otro...` que es un input
+    - [ ] Cacilla de verificación (Check box)
+      - [ ] Check box
+      - [ ] Permité agregar la opción `otro...` que es un input
+    - [ ] Lista desplegable
+      - [ ] Select
 
 Nota: crear seeder para guardar categoria de tipo (emocional y matematico)}
 
-- Categorias:
-  - text (unico)
+- [x] Categorias:
+  - [ ] text (unico)
 
-- Opción: (Opción para la pregunta)
-  - texto
-  - puntaje (optional)
-  - hash (autogenerado)
+- [x] Opción: (Opción para la pregunta)
+  - [ ] texto
+  - [ ] puntaje (optional)
+  - [ ] hash (autogenerado)
+
+
+DEFINIR: si 1 pregunta puede estár en multiples formularios
