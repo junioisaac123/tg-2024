@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->foreignId('questionnaire_category_id')->nullable(true)->constrained()->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

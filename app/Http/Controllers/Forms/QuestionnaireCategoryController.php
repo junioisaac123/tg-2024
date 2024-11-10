@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Forms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class QuestionCategorieController extends Controller
+class QuestionnaireCategoryController extends Controller
 {
     /**
      * The attributes that aren't mass assignable.

@@ -9,7 +9,13 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'category_id', 'description', 'image', 'is_required', 'type'];
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'is_required',
+        'type'
+    ];
 
     public function questionnaire()
     {
@@ -19,10 +25,5 @@ class Question extends Model
     public function options()
     {
         return $this->hasMany(QuestionOption::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(QuestionCategory::class, 'category_id');
     }
 }

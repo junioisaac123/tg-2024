@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminFormController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', AdminUserController::class);
         Route::resource('roles', AdminRoleController::class);
         Route::resource('permissions', AdminPermissionController::class);
+        Route::resource('forms', AdminFormController::class);
     });
 
     // Chesse
@@ -31,6 +33,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/new', [ChessController::class, 'startGame'])->name('game.new');
         Route::post('/aimove', [ChessController::class, 'aiMove'])->name('game.aimove');
     });
+
+    // Forms
+
 });
 
 require __DIR__ . '/auth.php';

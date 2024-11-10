@@ -9,10 +9,15 @@ class Questionnaire extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'questionnaire_category_id'];
 
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function scopeWithQuestionCount($query)
+    {
+        return $query->withCount('questions');
     }
 }
