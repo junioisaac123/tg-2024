@@ -15,159 +15,168 @@ class ExampleFormSeeder extends Seeder
      */
     public function run(): void
     {
+        // Crear categorías
+        $emotionalCategory = QuestionnaireCategory::create(['text' => 'Estado Emocional']);
+        $mathSkillsCategory = QuestionnaireCategory::create(['text' => 'Habilidades Matemáticas Básicas']);
 
-        $emotionalCategory = QuestionnaireCategory::create([
-            'text' => 'Evaluación Emocional'
-        ]);
-
-        $mathCategory = QuestionnaireCategory::create([
-            'text' => 'Habilidades Matemáticas Básicas'
-        ]);
-
-        // Crear Cuestionario de Evaluación Emocional
+        // Crear Cuestionario 1: Estado Emocional
         $emotionalQuestionnaire = Questionnaire::create([
-            'title' => 'Evaluación del Estado Emocional - 3ro de Primaria',
-            'description' => 'Cuestionario para evaluar el estado emocional de los niños de 3ro de primaria',
-            'questionnaire_category_id' => $emotionalCategory->id
+            'title' => 'Evaluación del Estado Emocional',
+            'description' => 'Cuestionario para evaluar el estado emocional de niños en 3ro de primaria',
+            'questionnaire_category_id' => $emotionalCategory->id,
         ]);
 
-        // Preguntas para el Cuestionario Emocional
-        $questionsEmotional = [
-            [
-                'title' => '¿Cómo te sientes hoy?',
-                'description' => 'Escribe en una palabra cómo te sientes',
-                'is_required' => true,
-                'type' => 'input'
-            ],
-            [
-                'title' => 'Describe cómo fue tu día en la escuela',
-                'description' => 'Cuentanos un poco sobre tu experiencia en el día',
-                'is_required' => false,
-                'type' => 'textarea'
-            ],
+        // Preguntas del Cuestionario de Estado Emocional
+        $emotionalQuestions = [
             [
                 'title' => '¿Te sientes feliz en la escuela?',
-                'is_required' => true,
                 'type' => 'radio',
-                'options' => [
-                    ['text' => 'Sí', 'score' => 5],
-                    ['text' => 'A veces', 'score' => 3],
-                    ['text' => 'No', 'score' => 1]
-                ]
+                'options' => ['Sí', 'No', 'A veces'],
+                'is_required' => true
             ],
             [
-                'title' => 'Selecciona las emociones que has sentido esta semana',
-                'is_required' => false,
-                'type' => 'checkbox',
-                'options' => [
-                    ['text' => 'Felicidad', 'score' => 5],
-                    ['text' => 'Tristeza', 'score' => 1],
-                    ['text' => 'Enojo', 'score' => 2],
-                    ['text' => 'Miedo', 'score' => 1]
-                ]
+                'title' => 'Describe cómo te sientes hoy.',
+                'type' => 'textarea',
+                'is_required' => false
             ],
             [
-                'title' => '¿Cómo te sientes al interactuar con tus compañeros?',
-                'is_required' => true,
+                'title' => '¿Qué haces cuando estás triste?',
                 'type' => 'select',
-                'options' => [
-                    ['text' => 'Muy cómodo', 'score' => 5],
-                    ['text' => 'Cómodo', 'score' => 4],
-                    ['text' => 'Neutro', 'score' => 3],
-                    ['text' => 'Incómodo', 'score' => 2],
-                    ['text' => 'Muy incómodo', 'score' => 1]
-                ]
+                'options' => ['Hablar con amigos', 'Hablar con la familia', 'Estar solo', 'Otra'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Con qué frecuencia te sientes nervioso o ansioso?',
+                'type' => 'select',
+                'options' => ['Nunca', 'Rara vez', 'A menudo', 'Siempre'],
+                'is_required' => true
+            ],
+            [
+                'title' => 'Marca las emociones que sientes durante el día.',
+                'type' => 'checkbox',
+                'options' => ['Feliz', 'Triste', 'Enojado', 'Asustado', 'Emocionado'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Cómo te sientes al hablar en público?',
+                'type' => 'radio',
+                'options' => ['Seguro', 'Nervioso', 'Indiferente'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Qué haces cuando algo te frustra?',
+                'type' => 'input',
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Te sientes cómodo al hacer nuevos amigos?',
+                'type' => 'radio',
+                'options' => ['Sí', 'No', 'A veces'],
+                'is_required' => true
             ]
         ];
 
-        foreach ($questionsEmotional as $q) {
+        // Guardar preguntas y opciones del Cuestionario de Estado Emocional
+        foreach ($emotionalQuestions as $questionData) {
             $question = Question::create([
-                'title' => $q['title'],
-                'description' => $q['description'] ?? null,
-                'is_required' => $q['is_required'],
-                'type' => $q['type'],
-                'questionnaire_id' => $emotionalQuestionnaire->id
+                'title' => $questionData['title'],
+                'description' => $questionData['description'] ?? null,
+                'is_required' => $questionData['is_required'],
+                'type' => $questionData['type'],
+                'questionnaire_id' => $emotionalQuestionnaire->id,
             ]);
 
-            if (isset($q['options'])) {
-                foreach ($q['options'] as $option) {
+            if (isset($questionData['options'])) {
+                foreach ($questionData['options'] as $optionText) {
                     QuestionOption::create([
-                        'text' => $option['text'],
-                        'score' => $option['score'] ?? null,
-                        'question_id' => $question->id
+                        'text' => $optionText,
+                        'question_id' => $question->id,
                     ]);
                 }
             }
         }
 
-        // Crear Cuestionario de Habilidades Matemáticas Básicas
+        // Crear Cuestionario 2: Habilidades Matemáticas Básicas
         $mathQuestionnaire = Questionnaire::create([
-            'title' => 'Evaluación de Habilidades Matemáticas Básicas - 3ro de Primaria',
-            'description' => 'Cuestionario para evaluar habilidades matemáticas básicas en estudiantes de 3ro de primaria',
-            'questionnaire_category_id' => $mathCategory->id
+            'title' => 'Evaluación de Habilidades Matemáticas Básicas',
+            'description' => 'Cuestionario para evaluar las habilidades matemáticas de niños en 3ro de primaria',
+            'questionnaire_category_id' => $mathSkillsCategory->id,
         ]);
 
-        // Preguntas para el Cuestionario Matemático
-        $questionsMath = [
+        // Preguntas del Cuestionario de Habilidades Matemáticas Básicas
+        $mathQuestions = [
             [
-                'title' => 'Escribe el resultado de 5 + 3',
-                'is_required' => true,
-                'type' => 'input'
+                'title' => '¿Cuál es el resultado de 3 + 4?',
+                'type' => 'input',
+                'is_required' => true
             ],
             [
-                'title' => 'Explica cómo resolviste 12 - 7',
-                'is_required' => false,
-                'type' => 'textarea'
-            ],
-            [
-                'title' => '¿Cuánto es 6 x 2?',
-                'is_required' => true,
-                'type' => 'radio',
-                'options' => [
-                    ['text' => '10', 'score' => 0],
-                    ['text' => '12', 'score' => 5],
-                    ['text' => '14', 'score' => 0]
-                ]
-            ],
-            [
-                'title' => 'Selecciona todos los números que son múltiplos de 3',
-                'is_required' => true,
-                'type' => 'checkbox',
-                'options' => [
-                    ['text' => '3', 'score' => 2],
-                    ['text' => '6', 'score' => 2],
-                    ['text' => '8', 'score' => 0],
-                    ['text' => '9', 'score' => 2]
-                ]
-            ],
-            [
-                'title' => 'Selecciona el símbolo correcto para la operación 8 ___ 4 = 32',
-                'is_required' => true,
+                'title' => 'Elige la operación que da como resultado 15.',
                 'type' => 'select',
-                'options' => [
-                    ['text' => '+', 'score' => 0],
-                    ['text' => '-', 'score' => 0],
-                    ['text' => 'x', 'score' => 5],
-                    ['text' => '÷', 'score' => 0]
-                ]
+                'options' => ['10 + 5', '8 + 6', '7 + 8'],
+                'is_required' => true
+            ],
+            [
+                'title' => 'Resuelve 9 - 2.',
+                'type' => 'input',
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Cuántos lados tiene un triángulo?',
+                'type' => 'radio',
+                'options' => ['2', '3', '4'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Cuál es el doble de 5?',
+                'type' => 'input',
+                'is_required' => true
+            ],
+            [
+                'title' => 'Marca los números que son pares.',
+                'type' => 'checkbox',
+                'options' => ['1', '2', '3', '4', '5', '6'],
+                'is_required' => true
+            ],
+            [
+                'title' => 'Escribe un número mayor que 10.',
+                'type' => 'input',
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Cuántos lados tiene un cuadrado?',
+                'type' => 'radio',
+                'options' => ['3', '4', '5'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Cuál de las siguientes operaciones resulta en un número impar?',
+                'type' => 'select',
+                'options' => ['6 + 2', '5 + 4', '3 + 5'],
+                'is_required' => true
+            ],
+            [
+                'title' => '¿Qué número sigue después de 7?',
+                'type' => 'input',
+                'is_required' => true
             ]
         ];
 
-        foreach ($questionsMath as $q) {
+        // Guardar preguntas y opciones del Cuestionario de Habilidades Matemáticas Básicas
+        foreach ($mathQuestions as $questionData) {
             $question = Question::create([
-                'title' => $q['title'],
-                'description' => $q['description'] ?? null,
-                'is_required' => $q['is_required'],
-                'type' => $q['type'],
-                'questionnaire_id' => $mathQuestionnaire->id
+                'title' => $questionData['title'],
+                'description' => $questionData['description'] ?? null,
+                'is_required' => $questionData['is_required'],
+                'type' => $questionData['type'],
+                'questionnaire_id' => $mathQuestionnaire->id,
             ]);
 
-            if (isset($q['options'])) {
-                foreach ($q['options'] as $option) {
+            if (isset($questionData['options'])) {
+                foreach ($questionData['options'] as $optionText) {
                     QuestionOption::create([
-                        'text' => $option['text'],
-                        'score' => $option['score'] ?? null,
-                        'question_id' => $question->id
+                        'text' => $optionText,
+                        'question_id' => $question->id,
                     ]);
                 }
             }

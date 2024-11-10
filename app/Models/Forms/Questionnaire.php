@@ -20,4 +20,9 @@ class Questionnaire extends Model
     {
         return $query->withCount('questions');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(QuestionnaireCategory::class, 'questionnaire_category_id');
+    }
 }

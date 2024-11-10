@@ -10,8 +10,8 @@ class QuestionnaireCategory extends Model
     use HasFactory;
     protected $fillable = ['text'];
 
-    public function questions()
+    public function questionnaires()
     {
-        return $this->hasMany(Question::class, 'category_id');
+        return $this->hasMany(Questionnaire::class);
     }
 }

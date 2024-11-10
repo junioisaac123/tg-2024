@@ -14,10 +14,8 @@ class AdminFormController extends Controller
     public function index()
     {
         //
-        $questionnaires = Questionnaire::withQuestionCount()->get();
-        dd($questionnaires);
-        $questionaries = Questionnaire::with('questions')->get();
-        dd($questionaries);
+        $questionnaires = Questionnaire::withQuestionCount()->with('category')->get();
+        return view('admin.forms.index', compact('questionnaires'));
     }
 
     /**
