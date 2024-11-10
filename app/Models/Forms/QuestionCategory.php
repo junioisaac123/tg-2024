@@ -5,14 +5,13 @@ namespace App\Models\Forms;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Questionnaire extends Model
+class QuestionCategory extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['text'];
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class, 'category_id');
     }
 }

@@ -9,10 +9,20 @@ class Question extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
-    protected $guarded = [];
+    protected $fillable = ['title', 'category_id', 'description', 'image', 'is_required', 'type'];
+
+    public function questionnaire()
+    {
+        return $this->belongsTo(Questionnaire::class);
+    }
+
+    public function options()
+    {
+        return $this->hasMany(QuestionOption::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(QuestionCategory::class, 'category_id');
+    }
 }

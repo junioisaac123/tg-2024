@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
+            $table->string('text'); 
+            $table->integer('score')->nullable(); 
+            $table->foreignId('question_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
