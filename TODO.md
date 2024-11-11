@@ -4,11 +4,11 @@
 
 - [x] Formularios - questionnaries:
   - [x] title
+  - [x] categoria (fk)
   - [x] description
 
 - [x] Pregunta: (Descripción y comportamiento para la pregunta) - question
   - [x] Título
-  - [x] categoria (fk)
   - [x] Descripción (optioal)
   - [x] Imágen (optional)
   - [x] Obligatorio:

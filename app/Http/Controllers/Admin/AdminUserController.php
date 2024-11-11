@@ -99,4 +99,5 @@ class AdminUserController extends Controller
             'message' => 'Not Allowed',
         ], 405);
     }
+    
 }

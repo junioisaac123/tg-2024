@@ -1,46 +1,8 @@
-<style>
-    @media screen and (max-width: 720px) {
-
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-            display: block;
-        }
-
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-
-        tr {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-
-        td {
-            border: none;
-            position: relative;
-            padding-left: 50%;
-        }
-
-        td:before {
-            position: absolute;
-            left: 6px;
-            content: attr(data-label);
-            font-weight: bold;
-        }
-    }
-</style>
-
 <div class="relative shadow-md sm:rounded-lg" x-data="manageForm">
     <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <div class="relative" x-data="{ open: false }">
-            <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+            <button id="dropdownActionButton"
                 class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                 type="button" @click="open = !open">
                 <span class="sr-only">{{ __('Action button') }}</span>
@@ -60,7 +22,12 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                         {{ __('Add Form') }}
                     </a>
-                    <a href="#" @click="open = !open && deleteSelectedForms()"
+                    <a href="#" @click="open = !open; deleteSelectedForms(event)"
+                        data-message-no-selet-error="{{ __('No forms selected') }}"
+                        data-message-error="{{ __('Error') }}"
+                        data-message-success="{{ __('Form deleted successfully') }}"
+                        data-message-confirm="{{ __('Are you sure you want to delete this form?') }}"
+                        data-action-url="{{ route('admin.forms.masive-destroy') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                         {{ __('Delete form') }}
                     </a>
@@ -114,7 +81,8 @@
                         <th scope="col" class="p-4">
                             <div class="flex items-center">
                                 <input id="checkbox-all-search" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    data-questionnaire-id="{{ $questionnaire->id }}">
                                 <label for="checkbox-all-search" class="sr-only">checkbox</label>
                             </div>
                         </th>
@@ -142,9 +110,9 @@
                                 {{ __('Edit') }}
                             </a>
                             <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline block"
-                                @click.prevent="deleteQuestionnaire" data-id="{{ $questionnaire->id }}"
-                                data-token="{{ md5($questionnaire->id . env('APP_NAME')) }}"
-                                data-action-url="{{ route('admin.forms.destroy', $questionnaire->id) }}">{{ __('Delete') }}</a>
+                                @click.prevent="confirmDeleteForm" data-id="{{ $questionnaire->id }}"
+                                data-action-url="{{ route('admin.forms.destroy', $questionnaire->id) }}"
+                                data-message-confirm="{{ __('Are you sure you want to delete this form?') }}">{{ __('Delete') }}</a>
                         </td>
                     </tr>
                 @endforeach
@@ -153,5 +121,4 @@
         </table>
     </section>
 
-    {{-- @include('admin.permissions.components.create-permission-modal') --}}
 </div>

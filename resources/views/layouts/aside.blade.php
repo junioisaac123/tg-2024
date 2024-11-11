@@ -23,6 +23,11 @@
             'route' => 'admin.forms.index',
             'active' => Request::routeIs('admin.forms.index'),
         ],
+        [
+            'name' => 'Add questionnaire',
+            'route' => 'admin.forms.create',
+            'active' => Request::routeIs('admin.forms.create'),
+        ],
     ];
 @endphp
 

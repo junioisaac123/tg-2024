@@ -1,10 +1,10 @@
 <x-app-layout>
     @section('head.scrpits')
-        @vite(['resources/js/admin/forms/index.js'])
+        @vite(['resources/js/admin/forms/index.js', 'resources/css/modules/table-responsive.css'])
     @endsection
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('All Permisionss') }}
+            {{ __('All Questionnaires') }}
         </h2>
     </x-slot>
     <input type="hidden" name="app_name" id="app_name" value="{{ env('APP_NAME') }}">

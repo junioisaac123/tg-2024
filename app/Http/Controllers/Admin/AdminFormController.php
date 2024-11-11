@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Forms\Questionnaire;
+use App\Models\Forms\QuestionnaireCategory;
 use Illuminate\Http\Request;
 
 class AdminFormController extends Controller
@@ -24,6 +25,8 @@ class AdminFormController extends Controller
     public function create()
     {
         //
+        $categories = QuestionnaireCategory::all();
+        return view('admin.forms.create', compact('categories'));
     }
 
     /**
@@ -63,6 +66,33 @@ class AdminFormController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $form = Questionnaire::find($id);
+        if ($form) {
+            $form->delete();
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => __('Form not found'),
+            ], 404);
+        }
+        return response()->json([
+            'success' => true,
+            'message' => __('Form deleted successfully'),
+        ], 200);
+    }
+
+    public function masiveDestroy(Request $request)
+    {
+        $ids = $request->ids ?? [];
+        foreach ($ids as $formId) {
+            $form = Questionnaire::find($formId);
+            if ($form) {
+                $form->delete();
+            }
+        }
+        return response()->json([
+            'success' => true,
+            'message' => __('Forms deleted successfully'),
+        ], 200);
     }
 }

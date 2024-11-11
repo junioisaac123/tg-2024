@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('roles', AdminRoleController::class);
         Route::resource('permissions', AdminPermissionController::class);
         Route::resource('forms', AdminFormController::class);
+        Route::post('forms/masive-destroy', [AdminFormController::class, 'masiveDestroy'])->name('forms.masive-destroy');
     });
 
     // Chesse
