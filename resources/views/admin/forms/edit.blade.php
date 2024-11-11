@@ -17,11 +17,11 @@
 
 <x-app-layout>
     @section('head.scrpits')
-        @vite(['resources/js/admin/forms/create.js'])
+        @vite(['resources/js/admin/forms/edit.js'])
     @endsection
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('New Questionnaire') }}
+            {{ __('Edit Questionnaire') }}
         </h2>
     </x-slot>
     <input type="hidden" name="app_name" id="app_name" value="{{ env('APP_NAME') }}">
@@ -34,12 +34,13 @@
 
                     <div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
 
-                        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Crear Cuestionario</h1>
-
                         <!-- Formulario para el Cuestionario -->
-                        <form method="POST" action="{{ route('admin.forms.store') }}" enctype="multipart/form-data"
-                            x-data="questionnaireForm()" @submit.prevent="submitForm" x-ref="questionnaireForm">
+                        <form method="POST" action="{{ route('admin.forms.update', $questionnaire->id) }}"
+                            enctype="multipart/form-data" x-data="questionnaireFormEdit({{ json_encode($questionnaire) }})" @submit.prevent="submitForm"
+                            x-ref="questionnaireForm">
                             @csrf
+
+                            <input type="hidden" name="id" x-model="fId">
 
                             <!-- Título del cuestionario -->
                             <div class="mb-4">
@@ -191,10 +192,9 @@
 
                                                                 <input
                                                                     @change="toggleOptionScore(qIndex, oIndex, event)"
-                                                                    type="checkbox"
+                                                                    type="checkbox" :checked="option.checkScore == 1"
                                                                     class="p-3 ml-2 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                                                 <input type="hidden"
-                                                                    :checked="option.checkScore == 1"
                                                                     :name="'questions[' + qIndex + '][options][' + oIndex +
                                                                         '][score]'"
                                                                     x-model="option.checkScore">

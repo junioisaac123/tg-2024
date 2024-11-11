@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Forms\Questionnaire;
 use App\Models\Forms\QuestionnaireCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class AdminFormController extends Controller
 {
@@ -34,7 +35,39 @@ class AdminFormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $newQuestionnaire = new Questionnaire();
+        $newQuestionnaire->title = $request->title;
+        $newQuestionnaire->description = $request->description;
+        $newQuestionnaire->questionnaire_category_id = $request->category_id;
+        $newQuestionnaire->rating_mode = $request->rating_mode;
+        $newQuestionnaire->save();
+
+        $questionsToSave = [];
+
+        foreach ($request->questions as $question) {
+            $newQuestionArr = [
+                'title' => $question['title'],
+                'description' => $question['description'],
+                'is_required' => $question['is_required'] == 'on' ? true : false,
+                'type' => $question['type'],
+            ];
+            // save the image
+            if (isset($question['image']) && $question['image'] instanceof UploadedFile && $question['image']->isValid()) {
+                $tmstamp = intval(microtime(true) * 1000);
+                $randTun = rand(1000, 9999);
+                $ext = $question['image']->extension();
+                $fileName = $tmstamp . $randTun . '.' . $ext;
+                $path = $question['image']->storeAs('images/forms/questions', $fileName, 'public');
+                $newQuestionArr['image'] = $path;
+            }
+            $questionsToSave[] = $newQuestionArr;
+        }
+        $newQuestionnaire->questions()->createMany($questionsToSave);
+        return response()->json([
+            'success' => true,
+            'message' => __('Form created successfully'),
+        ], 200);
     }
 
     /**
@@ -43,6 +76,7 @@ class AdminFormController extends Controller
     public function show(string $id)
     {
         //
+        // return view('admin.forms.show');
     }
 
     /**
@@ -51,6 +85,11 @@ class AdminFormController extends Controller
     public function edit(string $id)
     {
         //
+        $categories = QuestionnaireCategory::all();
+        $questionnaire = Questionnaire::where('id', $id)
+            ->with('questions.options')
+            ->first();
+        return view('admin.forms.edit', compact('categories', 'questionnaire'));
     }
 
     /**

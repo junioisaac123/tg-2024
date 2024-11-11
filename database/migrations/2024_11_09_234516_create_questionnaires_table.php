@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->enum('rating_mode', ['off', 'scores', 'checks'])->default('off');
             $table->foreignId('questionnaire_category_id')->nullable(true)->constrained()->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();

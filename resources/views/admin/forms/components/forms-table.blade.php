@@ -104,7 +104,7 @@
                             {{ $questionnaire->updated_at }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" @click.prevent="showEditModal"
+                            <a href="{{ route('admin.forms.edit', $questionnaire->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline block"
                                 data-questionnaire-id="{{ $questionnaire->id }}">
                                 {{ __('Edit') }}

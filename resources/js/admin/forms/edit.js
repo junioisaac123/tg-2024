@@ -9,13 +9,30 @@ document.querySelectorAll("textarea").forEach(function (textarea) {
 });
 
 document.addEventListener("alpine:init", () => {
-    Alpine.data("questionnaireForm", () => ({
-        fTitle: "",
-        fDescription: "",
-        fCategoryId: null,
-        fRatingMode: "off",
+    Alpine.data("questionnaireFormEdit", (dataToInit) => ({
+        fId: dataToInit.id ?? null,
+        fTitle: dataToInit.title ?? "",
+        fDescription: dataToInit.description ?? "",
+        fCategoryId: dataToInit.questionnaire_category_id ?? null,
+        fRatingMode: dataToInit.rating_mode ?? "off",
 
-        questions: [],
+        questions: [
+            // ...(dataToInit.questions ?? []).map((question) => ({
+            //     ...question,
+            // })),
+            ...(dataToInit.questions ?? []).map((question) => {
+                const questionObj = {
+                    ...question,
+                };
+                const rattingMode = dataToInit.rating_mode ?? "off";
+                if (rattingMode == "checks") {
+                    questionObj.options.map((option) => {
+                        option.checkScore = option.score;
+                    });
+                }
+                return questionObj;
+            }),
+        ],
         addQuestion() {
             const newQuestion = {
                 title: "",
