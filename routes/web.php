@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('students', AdminStudentController::class);
 
         Route::post('forms/masive-destroy', [AdminFormController::class, 'masiveDestroy'])->name('forms.masive-destroy');
-    });
+    })->middleware('can:admin.*');
 
 
     Route::prefix('answers')->name('answers.')->group(function () {
