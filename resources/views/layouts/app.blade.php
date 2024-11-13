@@ -47,6 +47,50 @@
     </div>
 
     @yield('body.script')
+
+    @if (session('status') == 'success')
+        <script>
+            // on load document
+            document.addEventListener('DOMContentLoaded', function() {
+                SwalFCC({
+                    icon: 'success',
+                    title: '{{ __('Success') }}',
+                    text: '{{ session('message') }}',
+                    confirmButtonText: 'OK'
+                });
+            })
+        </script>
+    @elseif (session('status') == 'error')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                SwalFCC({
+                    icon: 'error',
+                    title: '{{ __('Error') }}',
+                    text: '{{ session('message') }}',
+                    confirmButtonText: 'OK'
+                });
+            })
+        </script>
+    @endif
+
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                SwalFCC({
+                    icon: 'error',
+                    title: 'Error de Validación',
+                    html: `
+<ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400" style="text-align: left;">
+     @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+                `,
+                });
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>

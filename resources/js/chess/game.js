@@ -190,14 +190,14 @@ function greySquare(square) {
 // State --------------------------------------------------
 
 function getState() {
-    const strState = localStorage.getItem(STORAGE_KEY);
+    const strState = sessionStorage.getItem(STORAGE_KEY);
     if (strState) {
         return JSON.parse(strState);
     }
     return;
 }
 function setState() {
-    localStorage.setItem(
+    sessionStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
             orientation: gameState.orientation,
@@ -467,6 +467,12 @@ $btnPause.addEventListener("click", function () {
 makeBoard();
 window.addEventListener("resize", function () {
     gameState.resize();
+});
+window.addEventListener("beforeunload", function (event) {
+    showResumeGameModal();
+    event.preventDefault();
+    event.stopPropagation();
+    event.returnValue = "";
 });
 
 // Start --------------------------------------------------

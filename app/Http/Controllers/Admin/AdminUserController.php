@@ -15,7 +15,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        // $users = User::all();
+        $users = User::with('roles')->get();
         return view('admin.users.index', compact('users'));
     }
 
@@ -99,5 +100,4 @@ class AdminUserController extends Controller
             'message' => 'Not Allowed',
         ], 405);
     }
-    
 }

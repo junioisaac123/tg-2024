@@ -1,46 +1,8 @@
-<style>
-    @media screen and (max-width: 720px) {
-
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-            display: block;
-        }
-
-        thead tr {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-
-        tr {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-
-        td {
-            border: none;
-            position: relative;
-            padding-left: 50%;
-        }
-
-        td:before {
-            position: absolute;
-            left: 6px;
-            content: attr(data-label);
-            font-weight: bold;
-        }
-    }
-</style>
-
-<div class="relative  shadow-md sm:rounded-lg" x-data="manageUser">
+<div class="relative shadow-md sm:rounded-lg" x-data="manageForm">
     <div
         class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
         <div class="relative" x-data="{ open: false }">
-            <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+            <button id="dropdownActionButton"
                 class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                 type="button" @click="open = !open">
                 <span class="sr-only">{{ __('Action button') }}</span>
@@ -56,14 +18,19 @@
                 class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 block absolute inset-0 top-full h-max mt-3 "
                 x-show="open" x-cloak @click.away="open = false">
                 <div class="py-1">
-                    <a href="#"
+                    <a href="{{ route('admin.students.create') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        {{ __('Add User') }}
+                        {{ __('Add Student') }}
                     </a>
-                    <a href="#"
+                    {{-- <a href="#" @click="open = !open; deleteSelectedStudents(event)"
+                        data-message-no-selet-error="{{ __('No students selected') }}"
+                        data-message-error="{{ __('Error') }}"
+                        data-message-success="{{ __('Student deleted successfully') }}"
+                        data-message-confirm="{{ __('Are you sure you want to delete this students?') }}"
+                        data-action-url="{{ route('admin.students.masive-destroy') }}"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                        {{ __('Delete Users') }}
-                    </a>
+                        {{ __('Delete students') }}
+                    </a> --}}
                 </div>
             </div>
         </div>
@@ -76,9 +43,9 @@
                         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
             </div>
-            <input type="text" id="table-search-users"
+            <input type="text" id="table-search-forms"
                 class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="{{ __('Search for users') }}">
+                placeholder="{{ __('Search for forms') }}">
         </div>
     </div>
     <section class="overflow-x-auto w-full">
@@ -99,9 +66,6 @@
                         {{ __('user name') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        {{ __('role') }}
-                    </th>
-                    <th scope="col" class="px-6 py-3">
                         {{ __('document type') }}
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -112,8 +76,8 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach ($users as $user)
+            <tbody x-ref="tableBody">
+                @foreach ($students as $user)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="col" class="p-4">
@@ -134,14 +98,14 @@
                         <td class="px-6 py-4">
                             {{ $user->username }}
                         </td>
-                        <td class="px-6 py-4">
+                        {{-- <td class="px-6 py-4">
                             @if ($user->roles->isEmpty())
                                 {{ __('No roles') }}
                             @endif
                             @foreach ($user->roles as $role)
                                 {{ $role->name }}{{ !$loop->last ? ',' : '' }}
                             @endforeach
-                        </td>
+                        </td> --}}
                         <td class="px-6 py-4">
                             {{ $user->document_type }}
                         </td>
@@ -149,12 +113,12 @@
                             {{ $user->document_number }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{{ route('admin.users.edit', $user->id) }}"
+                            <a href="{{ route('admin.students.edit', $user->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline block">Edit user</a>
                             <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline block"
-                                @click="deleteUser" data-id="{{ $user->id }}"
+                                @click="confirmDeleteStudent" data-id="{{ $user->id }}"
                                 data-token="{{ md5($user->id . env('APP_NAME')) }}"
-                                data-action-url="{{ route('admin.users.destroy', $user->id) }}">Delete user</a>
+                                data-action-url="{{ route('admin.students.destroy', $user->id) }}">Delete user</a>
                         </td>
                     </tr>
                 @endforeach

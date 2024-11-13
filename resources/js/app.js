@@ -21,7 +21,6 @@ window.SwalFCC = (...args) => {
     return Swal.fire(mixed);
 };
 
-
 window.Alpine = Alpine;
 
 Alpine.start();

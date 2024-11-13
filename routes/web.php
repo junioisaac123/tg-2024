@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\AdminFormController;
 use App\Http\Controllers\Admin\AdminPermissionController;
 use App\Http\Controllers\Admin\AdminRoleController;
+use App\Http\Controllers\Admin\AdminStudentController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\ChessController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentAnswerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,8 +28,23 @@ Route::middleware('auth')->group(function () {
         Route::resource('roles', AdminRoleController::class);
         Route::resource('permissions', AdminPermissionController::class);
         Route::resource('forms', AdminFormController::class);
+
+        Route::put('students/update-password/{student}', [AdminStudentController::class, 'updatePassword'])->name('students.update.password');
+
+        Route::resource('students', AdminStudentController::class);
+
         Route::post('forms/masive-destroy', [AdminFormController::class, 'masiveDestroy'])->name('forms.masive-destroy');
     });
+
+
+    Route::prefix('answers')->name('answers.')->group(function () {
+        Route::get('/forms', [StudentAnswerController::class, 'indexForms'])->name('index.forms');
+        Route::get('/forms/{questionnaire}', [StudentAnswerController::class, 'showForm'])->name('show.form');
+        Route::get('emotional', [StudentAnswerController::class, 'showEmotionalForm'])->name('emotional');
+        Route::put('/', [StudentAnswerController::class, 'store'])->name('store');
+    });
+
+
 
     // Chesse
     Route::prefix('chess')->name('chess.')->group(function () {
