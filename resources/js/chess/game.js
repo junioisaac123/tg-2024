@@ -20,7 +20,9 @@ const $modalPromotion = $("#modal-promotion");
 
 const $gameOverBanner = $("#game-over-banner");
 const $gameOverMessage = $gameOverBanner.querySelector("#game-over-message");
-const $gameOverSubMessage = $gameOverBanner.querySelector("#game-over-message");
+const $gameOverSubMessage = $gameOverBanner.querySelector(
+    "#game-over-submessage",
+);
 const $btnRestartGame = $gameOverBanner.querySelector(
     '[data-btn-action="restart-game"]',
 );
@@ -305,17 +307,21 @@ function onSnapEnd() {
 }
 
 function updateStatus() {
-    const stateColor = gameState.engine.turn() === "w" ? "White" : "Black";
+    const stateColor = gameState.engine.turn() === "w" ? "white" : "black";
     if (gameState.engine.isCheckmate()) {
         const nextColor =
             gameState.engine.turn() === "w" ? "Negro ⚫" : "Blanco ⚪";
+
         const title = `¡Jaque mate! <br>Las fichas de color ${nextColor} ganaron!`;
         let subtitle = "";
-        if (gameState.orientation === nextColor) {
-            subtitle += "¡Has Ganado! 😎🎉";
-        } else {
+
+        if (gameState.orientation === stateColor) {
+            // perdi
             subtitle +=
                 "<br>¡Has Perdido! 😭. <br>¡¡Pero no te rindas!!, vuelve a intentarlo 🔥💫";
+        } else {
+            // ganaste
+            subtitle += "¡Has Ganado! 😎🎉";
         }
         showGameOverBanner(title, subtitle);
     } else if (gameState.engine.isDraw()) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Forms\FormStudent;
 use App\Models\Forms\Questionnaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class StudentAnswerController extends Controller
@@ -93,5 +94,24 @@ class StudentAnswerController extends Controller
             'status' => 'success',
             'message' => __('Form submitted successfully'),
         ]);
+    }
+
+
+    public function indexScores()
+    {
+        $data = DB::table('form_students')
+            ->join('users', 'users.id', '=', 'form_students.user_id')
+            ->join('questionnaires', 'questionnaires.id', '=', 'form_students.questionnaire_id')
+            ->join('questionnaire_categories', 'questionnaire_categories.id', '=', 'questionnaires.questionnaire_category_id')
+            ->select(
+                'form_students.*',
+                'users.first_name',
+                'users.last_name',
+                'questionnaires.title as form_title',
+                'questionnaire_categories.text as category'
+            )
+            ->get();
+
+        return view('scores.index', compact('data'));
     }
 }

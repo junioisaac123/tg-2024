@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/', [StudentAnswerController::class, 'store'])->name('store');
     });
 
+    Route::prefix('scores')->name('scores.')->group(function () {
+        Route::get('/', [StudentAnswerController::class, 'indexScores'])->name('index');
+    });
+
 
 
     // Chesse
