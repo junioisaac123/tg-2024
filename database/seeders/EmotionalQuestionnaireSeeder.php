@@ -22,7 +22,7 @@ class EmotionalQuestionnaireSeeder extends Seeder
 
         // Crear cuestionario
         $questionnaire = Questionnaire::firstOrCreate([
-            'title' => 'Cuestionario Emocional para niños de 3ro de Primaria',
+            'title' => 'Cuestionario Emocional para niños de 2ro de Primaria',
             'description' => 'Este cuestionario ayuda a evaluar el estado emocional del niño y determinar si se encuentra feliz o triste.',
             'rating_mode' => 'scores',
             'questionnaire_category_id' => $category->id,

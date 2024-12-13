@@ -22,7 +22,7 @@ class ExampleFormSeeder extends Seeder
         // // Crear Cuestionario 1: Estado Emocional
         // $emotionalQuestionnaire = Questionnaire::create([
         //     'title' => 'Evaluación del Estado Emocional',
-        //     'description' => 'Cuestionario para evaluar el estado emocional de niños en 3ro de primaria',
+        //     'description' => 'Cuestionario para evaluar el estado emocional de niños en 2ro de Primaria',
         //     'rating_mode' => 'scores',
         //     'questionnaire_category_id' => $emotionalCategory->id,
         // ]);
@@ -132,7 +132,7 @@ class ExampleFormSeeder extends Seeder
         // // Crear Cuestionario 2: Habilidades Matemáticas Básicas
         // $mathQuestionnaire = Questionnaire::create([
         //     'title' => 'Evaluación de Habilidades Matemáticas Básicas',
-        //     'description' => 'Cuestionario para evaluar las habilidades matemáticas de niños en 3ro de primaria',
+        //     'description' => 'Cuestionario para evaluar las habilidades matemáticas de niños en 2ro de Primaria',
         //     'rating_mode' => 'checks',
         //     'questionnaire_category_id' => $mathSkillsCategory->id,
         // ]);
@@ -244,7 +244,7 @@ class ExampleFormSeeder extends Seeder
         // Crear Cuestionario 2: Habilidades Matemáticas Básicas
         $mathQuestionnaire = Questionnaire::create([
             'title' => 'Evaluación de Habilidades Matemáticas Básicas',
-            'description' => 'Cuestionario para evaluar las habilidades matemáticas de niños en 3ro de primaria',
+            'description' => 'Cuestionario para evaluar las habilidades matemáticas de niños en 2ro de Primaria',
             'rating_mode' => 'checks',
             'questionnaire_category_id' => $mathSkillsCategory->id,
         ]);

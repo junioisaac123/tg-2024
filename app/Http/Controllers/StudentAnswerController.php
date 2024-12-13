@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Forms\FormStudent;
 use App\Models\Forms\Questionnaire;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use stdClass;
@@ -89,6 +90,28 @@ class StudentAnswerController extends Controller
             'attempt' => $attemp,
         ]);
 
+        if ($rating < 0 || $rating > 100) {
+            return response()->json(['error' => 'El puntaje del cuestionario es inválido.'], 400);
+        }
+
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado.'], 404);
+        }
+
+        $ratingAdjustment = 0;
+        if ($rating >= 80) {
+            $ratingAdjustment = 50 + (($rating - 80) / 20) * 50; 
+        } elseif ($rating < 50) {
+            $ratingAdjustment = -50 - ((50 - $rating) / 50) * 50;
+        }
+        $newElo = $user->elo + $ratingAdjustment;
+        if ($newElo < 0) {
+            return response()->json(['error' => 'El ajuste del ELO resultaría en un valor negativo.'], 400);
+        }
+
+        $user->increment('elo', $ratingAdjustment);
         // return to the needed url
         return redirect($request->return_url ?? 'dashboard')->with([
             'status' => 'success',
